@@ -52,14 +52,14 @@
 # ========
 
 # Batman Begins          Christian Bale        Bruce Wayne
-# Batman Begins          Mich Caine         Alfred
+# Batman Begins          Mich Caine            Alfred
 # Batman Begins          Liam Neeson           Ra's Al Ghul
 # Batman Begins          Katie Holmes          Rachel Dawes
 # Batman Begins          Gary Oldman           Commissioner Gordon
 # The Dark Knight        Christian Bale        Bruce Wayne
 # The Dark Knight        Heath Ledger          Joker
-# The Dark Knight        Aaron Ecrt         Harvey Dent
-# The Dark Knight        Mich Caine         Alfred
+# The Dark Knight        Aaron Ecrt            Harvey Dent
+# The Dark Knight        Mich Caine            Alfred
 # The Dark Knight        Maggie Gyllenhaal     Rachel Dawes
 # The Dark Knight Rises  Christian Bale        Bruce Wayne
 # The Dark Knight Rises  Gary Oldman           Commissioner Gordon
@@ -76,6 +76,10 @@ Movie.destroy_all
 Role.destroy_all
 # Generate models and tables, according to the domain model.
 # TODO!
+# rails generate model Studio
+# rails generate model Actor
+# rails generate model Movie
+# rails generate model Role
 
 # Insert data into the database that reflects the sample data shown above.
 # Do not use hard-coded foreign key IDs.
@@ -89,7 +93,7 @@ actor = Actor.new
 actor["name"] = "Christian Bale"
 actor.save
 actor = Actor.new
-actor["name"] = "Mich Caine"
+actor["name"] = "Michael Caine"
 actor.save
 actor = Actor.new
 actor["name"] = "Liam Neeson"
@@ -120,11 +124,7 @@ actor["name"] = "Anne Hathaway"
 actor.save
 puts "There are #{Actor.all.count} actors"
 
-
-
-
 WB = Studio.find_by({"name" => "Warner Bros."})
-
 movie = Movie.new
 movie["title"] = "Batman Begins"
 movie["year_released"] = 2005
@@ -146,7 +146,6 @@ movie.save
 puts "There are #{Movie.all.count} movies"
 
 
-
 movie1= Movie.find_by({"title" => "Batman Begins"})
 actor = Actor.find_by({"name" => "Christian Bale"})
 role = Role.new
@@ -154,7 +153,7 @@ role["movie_id"] = movie1["id"]
 role["actor_id"] = actor["id"]
 role["character_name"] = "Bruce Wayne"
 role.save
-actor = Actor.find_by({"name" => "Mich Caine"})
+actor = Actor.find_by({"name" => "Michael Caine"})
 role = Role.new
 role["movie_id"] = movie1["id"]
 role["actor_id"] = actor["id"]
@@ -198,7 +197,7 @@ role["movie_id"] = movie2["id"]
 role["actor_id"] = actor["id"]
 role["character_name"] = "Harvey Dent"
 role.save
-actor = Actor.find_by({"name" => "Mich Caine"})
+actor = Actor.find_by({"name" => "Michael Caine"})
 role = Role.new
 role["movie_id"] = movie2["id"]
 role["actor_id"] = actor["id"]
@@ -254,10 +253,10 @@ puts ""
 # TODO!
 
 studio_movie = Movie.where({"studio_id" => WB["id"]})
-for movies in studio_movie
-    title = movies["title"]
-    year = movies["year_released"]
-    rate = movies["rated"]
+for movie in studio_movie
+    title = movie["title"]
+    year = movie["year_released"]
+    rate = movie["rated"]
     studio_name = WB["name"]
     puts "#{title}  #{year}     #{rate}  #{studio_name}"
 end 
@@ -270,30 +269,31 @@ puts ""
 
 # Query the cast data and loop through the results to display the cast output for each movie.
 # TODO!
-cast1 = Role.where({"movie_id" => movie1["id"]})
-all_actors = Actor.all
-for cast in cast1
-    movie_name = movie1["title"]
-    for all_actor in all_actors
-        actor_name = actor["name"]
-    character_name = cast["character_name"]
-    puts "#{movie_name} #{actor_name} #{character_name}"
-end
-# cast_movie = Role.where(
-#     {"movie_id" => movie1["id"]},
-#     {"movie_id" => movie2["id"]},
-#     {"movie_id" => movie3["id"]})
-# cast_actor = Role.where(
-#     {"actor_id" => actor["id"]},
-#     {"actor_id" => actor["id"]},
-#     {"actor_id" => actor["id"]},
-#     {"actor_id" => actor["id"]},
-#     {"actor_id" => GO_actor["id"]},
-#     {"actor_id" => actor["id"]},
-#     {"actor_id" => actor["id"]},
-#     {"actor_id" => actor["id"]},
-#     {"actor_id" => TH_actor["id"]},
-#     {"actor_id" => JGL_actor["id"]},
-#     {"actor_id" => AH_actor["id"]}
-# )
+roles = Role.where({"movie_id" => movie1["id"]})
+for role in roles
+    actors = Actor.find_by({"id" => role["actor_id"]})
+    actor_name = actors["name"]
+    movies = Movie.find_by({"id" => role["movie_id"]})
+    movie_name = movies["title"]
+    character_name = role["character_name"]
+    puts "#{movie_name}     #{actor_name}       #{character_name}"
+end 
+# roles = Role.where({"movie_id" => movie2["id"]})
+# for role in roles
+#     actors = Actor.find_by({"id" => role["actor_id"]})
+#     actor_name = actors["name"]
+#     movies = Movie.find_by({"id" => role["movie_id"]})
+#     movie_name = movies["title"]
+#     character_name = role["character_name"]
+#     puts "#{movie_name}     #{actor_name}    #{character_name}"
+# end 
 
+# roles = Role.where({"movie_id" => movie3["id"]})
+# for role in roles
+#     actors = Actor.find_by({"id" => role["actor_id"]})
+#     actor_name = actors["name"]
+#     movies = Movie.find_by({"id" => role["movie_id"]})
+#     movie_name = movies["title"]
+#     character_name = role["character_name"]
+#     puts "#{movie_name}     #{actor_name}    #{character_name}"
+# end 
