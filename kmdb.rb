@@ -278,22 +278,22 @@ for role in roles
     character_name = role["character_name"]
     puts "#{movie_name}     #{actor_name}       #{character_name}"
 end 
-# roles = Role.where({"movie_id" => movie2["id"]})
-# for role in roles
-#     actors = Actor.find_by({"id" => role["actor_id"]})
-#     actor_name = actors["name"]
-#     movies = Movie.find_by({"id" => role["movie_id"]})
-#     movie_name = movies["title"]
-#     character_name = role["character_name"]
-#     puts "#{movie_name}     #{actor_name}    #{character_name}"
-# end 
+roles = Role.where({"movie_id" => movie2["id"]})
+for role in roles
+    actors = Actor.find_by({"id" => role["actor_id"]})
+    actor_name = actors["name"]
+    movies = Movie.find_by({"id" => role["movie_id"]})
+    movie_name = movies["title"]
+    character_name = role["character_name"]
+    puts "#{movie_name}     #{actor_name}    #{character_name}"
+end 
 
-# roles = Role.where({"movie_id" => movie3["id"]})
-# for role in roles
-#     actors = Actor.find_by({"id" => role["actor_id"]})
-#     actor_name = actors["name"]
-#     movies = Movie.find_by({"id" => role["movie_id"]})
-#     movie_name = movies["title"]
-#     character_name = role["character_name"]
-#     puts "#{movie_name}     #{actor_name}    #{character_name}"
-# end 
+roles = Role.where({"movie_id" => movie3["id"]})
+for role in roles
+    actors = Actor.find_by({"id" => role["actor_id"]})
+    actor_name = actors["name"]
+    movies = Movie.find_by({"id" => role["movie_id"]})
+    movie_name = movies["title"]
+    character_name = role["character_name"]
+    puts "#{movie_name}     #{actor_name}    #{character_name}"
+end 
